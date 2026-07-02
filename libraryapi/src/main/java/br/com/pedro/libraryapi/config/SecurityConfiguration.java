@@ -41,32 +41,6 @@ public class SecurityConfiguration {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
-        return Argon2PasswordEncoder.defaultsForSpringSecurity_v5_8();
-    }
-
-    // @Bean
-    public UserDetailsService userDetailsService(UserService service) {
-        /* UserDetails user1 = User.builder()
-                .username("usuario")
-                .password(encoder.encode("123"))
-                .roles("USER")
-                .build();
-
-        System.out.println(user1.getPassword());
-
-        UserDetails user2 = User.builder()
-                .username("admin")
-                .password(encoder.encode("123"))
-                .roles("ADMIN")
-                .build();
-
-         */
-
-        return new CustomUserDetailService(service);
-    }
-
-    @Bean
     public GrantedAuthorityDefaults grantedAuthorityDefaults() {
         return new GrantedAuthorityDefaults("");
     }
