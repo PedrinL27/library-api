@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: libraryapi
+  datasource:
+    url: ${POSTGRES_DATABASE_URL_PROD}
+    username: ${POSTGRES_DATABASE_USERNAME_PROD}
+    password: ${POSTGRES_DATABASE_PASSWORD_PROD}
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: update

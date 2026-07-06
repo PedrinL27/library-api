@@ -1,6 +1,8 @@
 spring:
   application:
     name: libraryapi
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE}
   datasource:
     url: ${POSTGRES_DATABASE_URL}
     username: ${POSTGRES_DATABASE_USERNAME}
