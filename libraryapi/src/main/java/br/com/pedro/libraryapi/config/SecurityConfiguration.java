@@ -11,6 +11,7 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.core.GrantedAuthorityDefaults;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -33,7 +34,6 @@ public class SecurityConfiguration {
             JwtCustomAuthenticationFilter jwtCustomAuthenticationFilter)  {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
-                .httpBasic(Customizer.withDefaults())
                 .formLogin(configurer -> configurer.loginPage("/login"))
                 .authorizeHttpRequests(authorize -> {
                     authorize.requestMatchers("/login").permitAll();
@@ -46,6 +46,20 @@ public class SecurityConfiguration {
                         oauth2RS.jwt(Customizer.withDefaults()))
                 .addFilterAfter(jwtCustomAuthenticationFilter, BearerTokenAuthenticationFilter.class)
                 .build();
+    }
+
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        return web -> web.ignoring().requestMatchers(
+                    "/v2/api-docs/**",
+                    "/v3/api-docs/**",
+                    "/swagger-resources/**",
+                    "/swagger-ui.html",
+                    "/swagger-ui/**",
+                    "/webjar/**",
+                    "/context-path/swagger-ui.html",
+                    "/context-path/v3/api-docs",
+                    "/actuator/**");
     }
 
     @Bean
